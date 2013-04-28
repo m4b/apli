@@ -1,0 +1,15 @@
+dist
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+.virthualenv
+*~
+*#
+*.aux
+*.log
+*.out
+*.ptb
+*.tex
+
