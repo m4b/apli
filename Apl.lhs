@@ -322,7 +322,7 @@ simpleIgnoreLoop = do
      do
        let tokens = scan expr
        result <- try (evaluate (eval tokens))::
-        IO (Either SomeException (APL Double))
+        IO (Either SomeException (APL Float))
        case result of
             Left errorMesg -> print errorMesg
             Right answer -> print answer

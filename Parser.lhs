@@ -77,14 +77,21 @@ The current scanner relies upon the Prelude's |words| function; a side effect is
 
 \begin{code}
 
-isNum s = and (map isDigit s)
+isFloat s = loop s 0 where
+        loop [] _                           = True
+        loop (s:ss) counter | isDigit s     = loop ss counter
+        loop ('.':ss) counter| counter == 0 = loop ss 1
+        loop (s:ss) _                       = False
+
+
+isNum s = (and (map isDigit s)) || isFloat s
 isIdent s = and (map isAlpha s)
 isSym s = (not . isNum $ s) && (not . isIdent $ s)
 
 -- eats the largest number or vector it can
 obtainNumber ns = loop ns where
              loop [] = []
-             loop (n:ns) | isNum n = (read n :: Double):loop ns
+             loop (n:ns) | isNum n = (read n :: Float):loop ns
              loop (n:ns) | and $ map isSpace n = loop ns
              loop (n:ns) = []
 
@@ -106,7 +113,9 @@ scan' t@(s:ss) | isNum s =
                  leftarg:op:(scan' $ tail ss')
 scan' _ = error "Unknown character in expression"
 
-isAPLbreak s = (isSpace s) || (isSymbol s) || (isPunctuation s)
+isPunctuation' c = (isPunctuation c) && (not (c=='.'))
+
+isAPLbreak c = (isSpace c) || (isSymbol c) || (isPunctuation' c)
 
 -- hack to parse no spaces between operators, parens, etc.
 myWords s =
@@ -114,7 +123,7 @@ myWords s =
              "" -> []
              s'@(c:cs) -> w:myWords s'' where
                     (w, s'') =  
-                     if ((isSymbol c) || (isPunctuation c))  then
+                     if ((isSymbol c) || (isPunctuation' c))  then
                         ([c],cs)
                      else 
                         break isAPLbreak s'
