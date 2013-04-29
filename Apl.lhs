@@ -19,6 +19,12 @@
 
 \newunicodechar{⌈}{\mathfont ⌈}
 \newunicodechar{⌊}{\mathfont ⌊}
+\newunicodechar{<}{\mathfont <}
+\newunicodechar{≤}{\mathfont ≤}
+\newunicodechar{=}{\mathfont =}
+\newunicodechar{≥}{\mathfont ≥}
+\newunicodechar{>}{\mathfont >}
+\newunicodechar{≠}{\mathfont ≠}
 
 \newfontfamily\mathfont{Asana Math}
 \newfontfamily\aplfont{DejaVu Sans Mono}
@@ -56,6 +62,8 @@
 %format ↓:      = "\text{ ↓}_2\text{ }"
 %format ^.      = "\text{ , }"
 %format ^:      = "\text{ ,}_2\text{ }"
+%format ∣.      = "\text{ | }"
+%format ∣:      = "\text{ |}_2\text{ }"
 
 
 %auto-gen
@@ -282,7 +290,7 @@ Wasn't that fun?
 
 \section{Main}
 
-This is the main module which starts a simple REPL loop that scans, parses and evaluates basic APL expressions.
+This is the main module which starts a simple REPL loop that scans, parses and evaluates basic APL expressions, while catching exceptions raised during evaluation.
 
 
 \begin{comment}
@@ -326,9 +334,7 @@ simpleIgnoreLoop = do
        case result of
             Left errorMesg -> print errorMesg
             Right answer -> print answer
-
        simpleIgnoreLoop
-                 
 
 main = do
   putStrLn "Astoundingly Profound Language Interpreter, version 0.1"

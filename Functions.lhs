@@ -131,6 +131,19 @@ iota i = reverse . loop $ i where
 
 \end{code}
 
+Unary comparison functions are undefined.
+
+\begin{code}
+
+(<.) ω = undefined
+(≤.) ω = undefined
+(=.) ω = undefined
+(≥.) ω = undefined
+(>.) ω = undefined
+(≠.) ω = undefined
+
+\end{code}
+
 \subsection{Dyadic Functions}
 
 Basic dyadic arithmetic and trigonometric functions.
@@ -242,6 +255,21 @@ roll x = (?.) x
     else loop (α-1) (ωs)
 
 --α /: ω 
+
+\end{code}
+
+The dyadic, comparison based functions, <,≤,=,≥,>,≠, are as follows:
+
+\begin{code}
+
+bool2Bin f = (\ x y -> if x `f` y then 1 else 0)
+
+α <: ω = map2 (bool2Bin (<)) α ω
+α ≤: ω = map2 (bool2Bin (<=)) α ω
+α =: ω = map2 (bool2Bin (==)) α ω
+α ≥: ω = map2 (bool2Bin (>=)) α ω
+α >: ω = map2 (bool2Bin (>)) α ω
+α ≠: ω = map2 (bool2Bin (/=)) α ω
 
 \end{code}
 

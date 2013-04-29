@@ -33,6 +33,7 @@ symbolMap sym =
           case sym of 
           "+" -> ((+.), (+:))
           "−" -> ((−.), (−:))
+          "-" -> ((−.), (−:))
           "×" -> ((×.), (×:))
           "÷" -> ((÷.), (÷:))
           "⋆" -> ((⋆.), (⋆:))
@@ -49,6 +50,12 @@ symbolMap sym =
           "↓" -> ((↓.), (↓:))
           "∣" -> ((∣.), (∣:))
           "|" -> ((∣.), (∣:))
+          "<" -> ((<.), (<:))
+          "≤" -> ((≤.), (≤:))
+          "=" -> ((=.), (=:))
+          "≥" -> ((≥.), (≥:))
+          ">" -> ((>.), (>:))
+          "≠" -> ((≠.), (≠:))
           s -> error ("Unknown symbol: " ++ s)
 
 \end{code}
@@ -104,7 +111,7 @@ scan' t@(s:ss) | isNum s =
       let num = obtainNumber t 
           ss' = (drop (length num) t)
             in
-          if ss' == [] then -- || (isSym $ head ss') then -- breaks arity
+          if ss' == [] then -- parens break arity right now
                (Number num): scan' ss'
           else
              let leftarg = Number num

@@ -96,6 +96,7 @@ removeUndesirables = (filter undesirables) . putSpaces
 cheat [] = []
 cheat ('.':'0':[]) = []
 cheat ('.':'0':x:xs) | not . isDigit $ x = x:cheat xs
+cheat ('-':xs) = '¯':cheat xs
 cheat (x:xs) = x:cheat xs
 
 aplShow (APL l) = cheat . removeUndesirables . show $  l
