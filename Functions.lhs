@@ -141,8 +141,21 @@ Unary comparison functions are undefined.
 (≥.) ω = undefined
 (>.) ω = undefined
 (≠.) ω = undefined
+(≡.) ω = undefined
 
 \end{code}
+
+The unary, logical functions are undefined:
+
+\begin{code}
+
+(∨.) ω = undefined
+(∧.) ω = undefined
+(⍱.) ω = undefined
+(⍲.) ω = undefined
+
+\end{code}
+
 
 \subsection{Dyadic Functions}
 
@@ -177,6 +190,15 @@ Basic dyadic arithmetic and trigonometric functions.
   APL [1] -> sin ω
   APL [2] -> cos ω
   APL [3] -> tan ω
+  APL [4] -> asin ω
+  APL [5] -> acos ω
+  APL [6] -> atan ω
+  APL [7] -> sinh ω
+  APL [8] -> cosh ω
+  APL [9] -> tanh ω
+  APL [10] -> asinh ω
+  APL [11] -> acosh ω
+  APL [12] -> atanh ω
   -- returning ω when no case match
   _ -> ω
 
@@ -270,6 +292,18 @@ bool2Bin f = (\ x y -> if x `f` y then 1 else 0)
 α ≥: ω = map2 (bool2Bin (>=)) α ω
 α >: ω = map2 (bool2Bin (>)) α ω
 α ≠: ω = map2 (bool2Bin (/=)) α ω
+α ≡: ω = if α == ω then 1 else 0
+
+\end{code}
+
+The dyadic, logical functions are as follows:
+
+\begin{code}
+
+α ∨: ω = map2 (\x y -> if x == 1 || y == 1 then 1 else 0) α ω
+α ∧: ω = map2 (\x y -> if x == 1 && y == 1 then 1 else 0) α ω
+α ⍱: ω = map2 (\x y -> if x == 0 && y == 0 then 1 else 0) α ω
+α ⍲: ω = map2 (\x y -> if x == 0 || y == 0 then 1 else 0) α ω
 
 \end{code}
 
