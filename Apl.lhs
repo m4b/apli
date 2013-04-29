@@ -225,7 +225,7 @@
 %format nv1 = "nv_{1}"
 
 
-\title{APL Interpreter\\☠ {\small пиздец всему фашизму} ☠}
+\title{APL Interpreter\\☠  ☠}
 \author{\textsc{M. Barney}}
 \date{\today}
 
@@ -287,6 +287,7 @@ This is the main module which starts a simple REPL loop that scans, parses and e
 
 \begin{comment}
 \begin{code}
+{- пиздец всему фашизму -}
 
 {-# LANGUAGE 
     OverloadedStrings,
@@ -330,7 +331,7 @@ simpleIgnoreLoop = do
                  
 
 main = do
-  putStrLn "Atrociously Profound Language Interpreter, version 0.1"
+  putStrLn "Astoundingly Profound Language Interpreter, version 0.1"
   simpleIgnoreLoop
 
 
