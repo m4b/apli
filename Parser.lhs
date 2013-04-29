@@ -95,18 +95,28 @@ scan' t@(s:ss) | isNum s =
       let num = obtainNumber t 
           ss' = (drop (length num) t)
             in
-          if ss' == [] then
+          if ss' == [] then -- || (isSym $ head ss') then -- breaks arity
                (Number num): scan' ss'
-          else    
+          else
              let leftarg = Number num
                  next    = head ss'
                  op      = (Function next 2) in
                  leftarg:op:(scan' $ tail ss')
 scan' _ = error "Unknown character in expression"
 
--- need to write own words function 
--- to correctly deal with no spaces between parens, operators
-scan = scan' . words
+isAPLbreak s = (isSpace s) || (isSymbol s) || (isPunctuation s)
+
+myWords s =
+        case dropWhile isSpace s of
+             "" -> []
+             s'@(c:cs) -> w:myWords s'' where
+                    (w, s'') =  
+                     if ((isSymbol c) || (isPunctuation c))  then
+                        ([c],cs)
+                     else 
+                        break isAPLbreak s'
+
+scan = scan' . myWords
 
 \end{code}
 
