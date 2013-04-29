@@ -2,7 +2,7 @@
 
 It is probably fair to say that the interest (or notoriety) of APL lies in its functions.  There are approximately 100 symbols in APL, each which can typically be interpreted either \emph{monadically} (taking one argument), or \emph{dyadically} (taking two arguments).
 
-Therefore, we have approximately 200 functions to implement for what might be considered the ``prelude'' of APL.
+Therefore, there are approximately 200 candidate functions to implement for what might be considered a ``full'' implementation of APL.  Unfortunately, due to time constraints, we will only implement a small subset of the total possible amount, in what might be considered a simple ``prelude'' for our APL interpreter.
 
 I have separated the functions somewhat according to their behavior, and their ``types'' --- in other words, whether they expect scalars or vectors, operate on vectors, and so on and so forth.
 
@@ -41,15 +41,15 @@ independentFold f (x:xs) = inf_it f xs x
 
 -- − minus operator
 (−.) :: Num a => APL a -> APL a
-(−.) ω = fmap (* (-1)) ω
+(−.) ω = - ω
 
 -- × times operator
 (×.) :: Num a => APL a -> APL a
-(×.) ω = fmap signum ω
+(×.) ω = signum ω
 
 -- ÷ division operator
 (÷.) :: Fractional b => APL b -> APL b
-(÷.) ω = fmap recip ω
+(÷.) ω = recip ω
 
 -- ⋆ power operator
 (⋆.) :: Floating b => APL b -> APL b
@@ -70,6 +70,10 @@ independentFold f (x:xs) = inf_it f xs x
 -- ⍟ natural logarithm
 (⍟.) :: Floating a => APL a -> APL a
 (⍟.) ω = log ω
+
+-- ∣ make positive
+(∣.) :: Num a => APL a -> APL a
+(∣.) ω = abs ω
 
 \end{code}
 
@@ -125,7 +129,6 @@ iota i = reverse . loop $ i where
 -- tail of vector
 (↓.) ω = 1 ↓: ω
 
-
 \end{code}
 
 \subsection{Dyadic Functions}
@@ -167,6 +170,10 @@ Basic dyadic arithmetic and trigonometric functions.
 -- caught non-commutativity bug in map2 after implementing ⍟
 (⍟:) :: Floating a => APL a -> APL a -> APL a
 α ⍟: ω = logBase α ω
+
+-- nert perty -- need
+(∣:) :: (RealFrac a, Num b) => APL a -> APL a -> APL b
+α ∣: ω =  fmap fromIntegral $ ((⌊.) α) `rem` ((⌊.) ω)
 
 \end{code}
 

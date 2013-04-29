@@ -150,6 +150,7 @@ instance (Integral a, Real a, Enum a) => Integral (APL a) where
          -- truncating vectors for toInteger
          toInteger (APL [])      = error "toInteger: empty APL"
          toInteger (APL (p:ps))  = toInteger p
+--         toInteger p             = fmap toInteger p
 
 --instance (RealFrac a, Floating a) => RealFrac (APL a) where
 --         truncate (p)          = fromIntegral p

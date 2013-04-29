@@ -47,6 +47,8 @@ symbolMap sym =
           "," -> ((^.), (^:))
           "↑" -> ((↑.), (↑:))
           "↓" -> ((↓.), (↓:))
+          "∣" -> ((∣.), (∣:))
+          "|" -> ((∣.), (∣:))
           s -> error ("Unknown symbol: " ++ s)
 
 \end{code}
@@ -106,6 +108,7 @@ scan' _ = error "Unknown character in expression"
 
 isAPLbreak s = (isSpace s) || (isSymbol s) || (isPunctuation s)
 
+-- hack to parse no spaces between operators, parens, etc.
 myWords s =
         case dropWhile isSpace s of
              "" -> []
